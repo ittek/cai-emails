@@ -1,0 +1,76 @@
+.btn {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  user-select: none;
+  padding: 1rem 2rem;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 100;
+  letter-spacing: 0.04em;
+
+  --btn-raise: 1rem;
+  --border1: 4px;   /* Inner border width */
+  --border2: 10px;  /* Outer border width (from content edge) */
+
+  clip-path: polygon(
+    var(--btn-raise) 0%, 
+    calc(100% - var(--btn-raise)) 0%, 
+    100% 50%, 
+    calc(100% - var(--btn-raise)) 100%, 
+    var(--btn-raise) 100%, 
+    0 50%
+  );
+  background-color: #00274c;
+  color: white;
+  transition: background 0.15s, outline 0.15s;
+  z-index: 1;
+  outline: none;
+}
+
+/* --- Double Border --- */
+
+/* Outermost border (farthest out) */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--border2));
+  z-index: -2;
+  background: tomato; /* Outer border color */
+  clip-path: polygon(
+    var(--btn-raise) 0%,
+    calc(100% - var(--btn-raise)) 0%,
+    100% 50%,
+    calc(100% - var(--btn-raise)) 100%,
+    var(--btn-raise) 100%,
+    0 50%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* "Gap" between the borders (page background color) */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--border1));
+  z-index: -1;
+  background: white; /* Must match your page's background */
+  clip-path: polygon(
+    var(--btn-raise) 0%,
+    calc(100% - var(--btn-raise)) 0%,
+    100% 50%,
+    calc(100% - var(--btn-raise)) 100%,
+    var(--btn-raise) 100%,
+    0 50%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.btn:focus,
+.btn:hover {
+  outline: 2px solid #ffcb05;
+}
